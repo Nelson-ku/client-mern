@@ -5,32 +5,24 @@ import { useWorkoutContext } from "../hooks/useWorkoutContext";
 import WorkoutDetails from "../components/WorkoutDetails";
 import WorkoutForm from "../components/WorkoutForm";
 
-
 const baseUrl = "http://localhost:8000"
 
 const Home = () => {
 
-  const {workouts,dispatch}=useWorkoutContext()
-
+  const {workouts, dispatch}=useWorkoutContext()
     // const[workouts,setWorkouts]=useState(null)
-
-
 // ensure we only render the data once when the home component is first rendered
 //  http://localhost:8000/api/workouts
 useEffect(()=>{
     const fetchWorkouts= async ()=>{
        const response= await fetch(`${baseUrl}/api/workouts/allWorkouts`)
        const json =await response.json()
-
        if (response.ok){
         dispatch({type:'SET_WORKOUTS',payload:json})
-
        }
     }
     fetchWorkouts()
-},[])
-
-
+},[dispatch])
   return (
     <div className="Home">
       <div className="workouts">
@@ -41,7 +33,6 @@ useEffect(()=>{
       </div>
       <WorkoutForm/>
     </div>
-   
   );
 };
 
